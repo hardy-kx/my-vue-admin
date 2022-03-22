@@ -1,11 +1,6 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <div>
-      <router-link to="/page1">Page1</router-link>
-      <router-link to="/page2">Page2</router-link>
-    </div>
-    <router-view></router-view>
+    <router-view/>
   </div>
 </template>
 
@@ -22,6 +17,5 @@
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
     color: #2c3e50;
-    margin-top: 60px;
   }
 </style>

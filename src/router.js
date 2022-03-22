@@ -1,19 +1,44 @@
 //引入vue
 import Vue from 'vue';
-import VueRouter from 'vue-router';
-Vue.use(VueRouter);
-import page1  from './page1.vue';
-import page2  from './page2.vue';
-
-const routes=[
-    //单个路由均为对象类型，path代表的是路径，component代表组件
-    {path:'/page1',component:page1},
-    {path:"/page2",component:page2}
+import Router from 'vue-router';
+Vue.use(Router);
+/* Layout */
+import Layout from '@/layout'
+export const constantRoutes = [
+    {
+        path: '/',
+        component: Layout,
+        redirect: '/page1',
+        children: [{
+            path: 'page1',
+            name: 'Dashboard',
+            component: () => import('@/views/dashboard/index'),
+            meta: { title: 'Dashboard', icon: 'dashboard' }
+        }]
+    },
+    {
+        path: '/form',
+        component: Layout,
+        children: [
+            {
+                path: 'index',
+                name: 'Form',
+                component: () => import('@/views/form/index'),
+                meta: { title: 'Form', icon: 'form' }
+            }
+        ]
+    },
 ]
-
-//实例化VueRouter并将routes添加进去
-const router=new VueRouter({
-    routes
+const createRouter = () => new Router({
+    scrollBehavior: () => ({ y: 0 }),
+    routes: constantRoutes
 });
+
+const router = createRouter();
+
+export function resetRouter() {
+    const newRouter = createRouter();
+    router.matcher = newRouter.matcher
+}
 
 export default router
